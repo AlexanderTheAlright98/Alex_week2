@@ -7,6 +7,7 @@ public class Player1Controller : MonoBehaviour
     public float leftsidemoveSpeed = -5;
     public float rightsidemoveSpeed = 5;
     public int collisions = 0;
+    public float cratesAcquired = 0;
     Rigidbody rb;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -15,7 +16,6 @@ public class Player1Controller : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -31,7 +31,7 @@ public class Player1Controller : MonoBehaviour
             if (Input.GetKey(KeyCode.S))
             {
                 //transform.Translate(Vector3.back * Time.deltaTime * 0.5f * reverseSpeed);
-                rb.AddForce(-this.transform.forward * moveSpeed);
+                rb.AddForce(-this.transform.forward * moveSpeed * 0.75f);
             }
         }
 
@@ -43,9 +43,8 @@ public class Player1Controller : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
         {
-            transform.Translate(rightsidemoveSpeed * Time.deltaTime, 0, 0);
-            //rb.AddForce(Vector3.right * rightsidemoveSpeed);
-            transform.Rotate(0, 0.5f, 0);
+           rb.AddForce(Vector3.right * rightsidemoveSpeed);
+           transform.Rotate(0, 0.5f, 0);
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -53,6 +52,11 @@ public class Player1Controller : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             collisions++;
+        }
+
+        if (collision.gameObject.tag == "Contraband")
+        {
+            cratesAcquired++;
         }
     }
     private void OnCollisionExit(Collision collision)
