@@ -2,50 +2,37 @@ using UnityEngine;
 
 public class Player1Controller : MonoBehaviour
 {
-    public float moveSpeed = 2500;
-    public float reverseSpeed = 20;
-    public float leftsidemoveSpeed = -5;
-    public float rightsidemoveSpeed = 5;
+    public float moveSpeed = 7500;
+    public float turnSpeed = 7000;
     public int collisions = 0;
     public float cratesAcquired = 0;
+    private float vertical, horizontal;
+    public string playerIndex;
+
     Rigidbody rb;
+    private AudioSource contrabandAudio;
+    public AudioClip contrabandSFX;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        contrabandAudio = GetComponent<AudioSource>();
     }
 
     void Update()
     {
-
+        vertical = Input.GetAxis("Vertical" + playerIndex);
+        horizontal = Input.GetAxis("Horizontal" + playerIndex);
+    }
+    private void FixedUpdate()
+    {
         if (collisions > 0)
         {
-            if (Input.GetKey(KeyCode.W))
-            {
-                //transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
-                //rb.AddForce(Vector3.forward * moveSpeed);
-                rb.AddForce(this.transform.forward * moveSpeed);
-            }
-
-            if (Input.GetKey(KeyCode.S))
-            {
-                //transform.Translate(Vector3.back * Time.deltaTime * 0.5f * reverseSpeed);
-                rb.AddForce(-this.transform.forward * moveSpeed * 0.75f);
-            }
+            rb.AddForce(this.transform.forward * moveSpeed * vertical);
         }
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            rb.AddForce(Vector3.left * leftsidemoveSpeed);
-            transform.Rotate(0, -0.5f, 0);
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-           rb.AddForce(Vector3.right * rightsidemoveSpeed);
-           transform.Rotate(0, 0.5f, 0);
-        }
+        rb.AddTorque(Vector3.up * turnSpeed * horizontal);
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -57,6 +44,7 @@ public class Player1Controller : MonoBehaviour
         if (collision.gameObject.tag == "Contraband")
         {
             cratesAcquired++;
+            contrabandAudio.PlayOneShot(contrabandSFX);
         }
     }
     private void OnCollisionExit(Collision collision)
