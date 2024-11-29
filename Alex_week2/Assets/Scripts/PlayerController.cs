@@ -1,23 +1,19 @@
 using UnityEngine;
 
-public class Player1Controller : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 7500;
-    public float turnSpeed = 7000;
+    public float turnSpeed = 25;
     public int collisions = 0;
-    public float cratesAcquired = 0;
     private float vertical, horizontal;
     public string playerIndex;
 
     Rigidbody rb;
-    private AudioSource contrabandAudio;
-    public AudioClip contrabandSFX;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        contrabandAudio = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -32,19 +28,15 @@ public class Player1Controller : MonoBehaviour
             rb.AddForce(this.transform.forward * moveSpeed * vertical);
         }
 
-        rb.AddTorque(Vector3.up * turnSpeed * horizontal);
+        transform.Rotate(0, turnSpeed * horizontal * Time.deltaTime, 0);
+        // I know that rb.AddTorque is the "proper" way to do this, but the above method results in sharper, more arcade-y handling, which I think feels more fun to play
+        // The cars can rotate when stationary, but I think it helps the game feel more arcade-y.
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
             collisions++;
-        }
-
-        if (collision.gameObject.tag == "Contraband")
-        {
-            cratesAcquired++;
-            contrabandAudio.PlayOneShot(contrabandSFX);
         }
     }
     private void OnCollisionExit(Collision collision)

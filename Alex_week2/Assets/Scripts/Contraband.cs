@@ -12,7 +12,7 @@ public class Contraband : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0, 0.75f, 0);
+        transform.Rotate(0, 60 * Time.deltaTime, 0);
     }
 
     private void OnCollisionEnter(Collision collision)
