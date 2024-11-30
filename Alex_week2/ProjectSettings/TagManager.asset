@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - PlayerCar
   - Contraband
+  - Pole
   layers:
   - Default
   - TransparentFX

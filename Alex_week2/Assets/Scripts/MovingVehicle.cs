@@ -24,29 +24,14 @@ public class MovingVehicle : MonoBehaviour
     {
         if (collision.gameObject.tag == "StationaryVehicle")
         {
-            GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
             hascollidedwithVehicle = true;
         }
 
         if (collision.gameObject.tag == "PlayerCar")
         {
-            GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
             hascollidedwithVehicle = true;
-
-            //Commenting this out because it makes the moving vehicles fall through the ground. Not sure as to the workaround yet.
-            //private void OnTriggerEnter(Collider other)
-            //{
-            //    if (other.gameObject.tag == "StationaryVehicle")
-            //   {
-            //        GetComponent<Rigidbody>().linearVelocity= Vector3.zero;
-            //        hascollidedwithVehicle = true;
-            //   }
-            //
-            //    if (other.gameObject.tag == "PlayerCar")
-            //    {
-            //        GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-            //        hascollidedwithVehicle = true;
-            //    }
         }
     }
 }

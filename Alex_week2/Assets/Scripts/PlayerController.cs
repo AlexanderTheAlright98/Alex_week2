@@ -5,15 +5,18 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 7500;
     public float turnSpeed = 25;
     public int collisions = 0;
-    private float vertical, horizontal;
     public string playerIndex;
+    public AudioClip poleSFX;
 
     Rigidbody rb;
+    private float vertical, horizontal;
+    private AudioSource poleAudio;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        poleAudio = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -37,6 +40,11 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             collisions++;
+        }
+
+        if (collision.gameObject.tag == "Pole")
+        {
+            poleAudio.PlayOneShot(poleSFX);
         }
     }
     private void OnCollisionExit(Collision collision)
