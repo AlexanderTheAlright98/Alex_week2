@@ -38,11 +38,17 @@ public class Timer : MonoBehaviour
         {
             Time.timeScale = 0;
             _AudioSource1.Stop();
-            restartTXT.text = "TIME'S UP, BABY! PRESS 'R' TO RESTART!";
+            restartTXT.text = "TIME'S UP, YOU TWO! PRESS 'R' TO RESTART OR 'M' TO RETURN TO THE MAIN MENU!";
 
             if (Input.GetKeyDown(KeyCode.R))
             {
                 SceneManager.LoadScene("2Player");
+                Time.timeScale = 1;
+            }
+
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                SceneManager.LoadScene("MainMenu");
                 Time.timeScale = 1;
             }
 

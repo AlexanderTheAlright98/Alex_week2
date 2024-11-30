@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -7,22 +8,29 @@ public class PlayerController : MonoBehaviour
     public int collisions = 0;
     public string playerIndex;
     public AudioClip poleSFX;
+    public AudioClip carhitSFX;
 
     Rigidbody rb;
     private float vertical, horizontal;
-    private AudioSource poleAudio;
+    private AudioSource sfxAudio;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        poleAudio = GetComponent<AudioSource>();
+        sfxAudio = GetComponent<AudioSource>();
     }
 
     void Update()
     {
         vertical = Input.GetAxis("Vertical" + playerIndex);
         horizontal = Input.GetAxis("Horizontal" + playerIndex);
+
+        //With the way the game works, it's quite easy to get permanently stuck if you hit something. Having an instant main menu button is also udeful for if you get bored during the Joyridin' game mode
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
     }
     private void FixedUpdate()
     {
@@ -44,7 +52,12 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == "Pole")
         {
-            poleAudio.PlayOneShot(poleSFX);
+            sfxAudio.PlayOneShot(poleSFX);
+        }
+
+        if  (collision.gameObject.tag == "StationaryVehicle")
+        {
+            sfxAudio.PlayOneShot(carhitSFX);
         }
     }
     private void OnCollisionExit(Collision collision)

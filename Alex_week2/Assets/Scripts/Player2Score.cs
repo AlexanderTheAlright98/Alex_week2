@@ -31,4 +31,3 @@ public class Player2Score : MonoBehaviour
 
     }
 }
-

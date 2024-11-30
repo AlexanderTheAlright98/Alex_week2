@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
+//using static UnityEditor.Searcher.SearcherWindow.Alignment;
+//Commented this bit out because it won't let me build my game. No idea why
+//Also deleted the video that comes with this, because it throws a warning when I switch to WebGL for building the project
 
 public class PlayerControllerX : MonoBehaviour
 {
